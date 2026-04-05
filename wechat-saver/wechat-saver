@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# WeChat Saver 包装脚本
+# 自动激活虚拟环境并运行
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_DIR="$SCRIPT_DIR/.venv"
+PYTHON_SCRIPT="$SCRIPT_DIR/scripts/wechat_to_md.py"
+
+# 检查虚拟环境
+if [ ! -d "$VENV_DIR" ]; then
+    echo "❌ 虚拟环境不存在，请先安装依赖："
+    echo ""
+    echo "  cd ~/.claude/skills/wechat-saver"
+    echo "  python3 -m venv .venv"
+    echo "  source .venv/bin/activate"
+    echo "  pip install requests readability-lxml beautifulsoup4 lxml"
+    echo ""
+    exit 1
+fi
+
+# 激活虚拟环境并运行
+source "$VENV_DIR/bin/activate"
+python "$PYTHON_SCRIPT" "$@"
